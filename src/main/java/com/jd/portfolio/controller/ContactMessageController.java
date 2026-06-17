@@ -3,6 +3,7 @@ package com.jd.portfolio.controller;
 import com.jd.portfolio.dto.contact.ContactMessageRequestDto;
 import com.jd.portfolio.dto.contact.ContactMessageResponseDto;
 import com.jd.portfolio.service.ContactMessageService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +20,7 @@ public class ContactMessageController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ContactMessageResponseDto createMessage(
-            @RequestBody ContactMessageRequestDto requestDto) {
+            @Valid @RequestBody ContactMessageRequestDto requestDto) {
 
         return contactMessageService.createContactMessage(requestDto);
     }

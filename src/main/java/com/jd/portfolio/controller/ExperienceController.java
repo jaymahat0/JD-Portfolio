@@ -3,6 +3,7 @@ package com.jd.portfolio.controller;
 import com.jd.portfolio.dto.experience.ExperienceRequestDto;
 import com.jd.portfolio.dto.experience.ExperienceResponseDto;
 import com.jd.portfolio.service.ExperienceService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +30,7 @@ public class ExperienceController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ExperienceResponseDto createExperience(
-            @RequestBody ExperienceRequestDto requestDto) {
+            @Valid @RequestBody ExperienceRequestDto requestDto) {
 
         return experienceService.createExperience(requestDto);
     }
@@ -37,7 +38,7 @@ public class ExperienceController {
     @PutMapping("/{id}")
     public ExperienceResponseDto updateExperience(
             @PathVariable Long id,
-            @RequestBody ExperienceRequestDto requestDto) {
+            @Valid @RequestBody ExperienceRequestDto requestDto) {
 
         return experienceService.updateExperience(id, requestDto);
     }

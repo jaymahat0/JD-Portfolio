@@ -3,6 +3,7 @@ package com.jd.portfolio.serviceimpl;
 import com.jd.portfolio.dto.skill.SkillRequestDto;
 import com.jd.portfolio.dto.skill.SkillResponseDto;
 import com.jd.portfolio.entity.Skill;
+import com.jd.portfolio.exception.ResourceNotFoundException;
 import com.jd.portfolio.mapper.SkillMapper;
 import com.jd.portfolio.repository.SkillRepository;
 import com.jd.portfolio.service.SkillService;
@@ -32,7 +33,7 @@ public class SkillServiceImpl implements SkillService {
     public SkillResponseDto getSkillById(Long id) {
         Skill skill = skillRepository.findById(id)
                 .orElseThrow(() ->
-                        new EntityNotFoundException("Skill not found with id: " + id));
+                        new ResourceNotFoundException("Skill not found with id: " + id));
 
         return SkillMapper.toResponse(skill);
     }
@@ -51,7 +52,7 @@ public class SkillServiceImpl implements SkillService {
 
         Skill skill = skillRepository.findById(id)
                 .orElseThrow(() ->
-                        new EntityNotFoundException("Skill not found with id: " + id));
+                        new ResourceNotFoundException("Skill not found with id: " + id));
 
         skill.setName(requestDto.getName());
         skill.setProficiency(requestDto.getProficiency());

@@ -3,6 +3,7 @@ package com.jd.portfolio.serviceimpl;
 import com.jd.portfolio.dto.education.EducationRequestDto;
 import com.jd.portfolio.dto.education.EducationResponseDto;
 import com.jd.portfolio.entity.Education;
+import com.jd.portfolio.exception.ResourceNotFoundException;
 import com.jd.portfolio.mapper.EducationMapper;
 import com.jd.portfolio.repository.EducationRepository;
 import com.jd.portfolio.service.EducationService;
@@ -32,7 +33,7 @@ public class EducationServiceImpl implements EducationService {
     public EducationResponseDto getEducationById(Long id) {
         Education education = educationRepository.findById(id)
                 .orElseThrow(() ->
-                        new EntityNotFoundException("Education not found with id: " + id));
+                        new ResourceNotFoundException("Education not found with id: " + id));
 
         return EducationMapper.toResponse(education);
     }
@@ -51,7 +52,7 @@ public class EducationServiceImpl implements EducationService {
 
         Education education = educationRepository.findById(id)
                 .orElseThrow(() ->
-                        new EntityNotFoundException("Education not found with id: " + id));
+                        new ResourceNotFoundException("Education not found with id: " + id));
 
         education.setInstitution(requestDto.getInstitution());
         education.setDegree(requestDto.getDegree());

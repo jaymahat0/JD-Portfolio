@@ -3,6 +3,7 @@ package com.jd.portfolio.controller;
 import com.jd.portfolio.dto.skill.SkillRequestDto;
 import com.jd.portfolio.dto.skill.SkillResponseDto;
 import com.jd.portfolio.service.SkillService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +30,7 @@ public class SkillController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public SkillResponseDto createSkill(
-            @RequestBody SkillRequestDto requestDto) {
+            @Valid @RequestBody SkillRequestDto requestDto) {
 
         return skillService.createSkill(requestDto);
     }
@@ -37,7 +38,7 @@ public class SkillController {
     @PutMapping("/{id}")
     public SkillResponseDto updateSkill(
             @PathVariable Long id,
-            @RequestBody SkillRequestDto requestDto) {
+            @Valid @RequestBody SkillRequestDto requestDto) {
 
         return skillService.updateSkill(id, requestDto);
     }

@@ -3,6 +3,7 @@ package com.jd.portfolio.serviceimpl;
 import com.jd.portfolio.dto.project.ProjectRequestDto;
 import com.jd.portfolio.dto.project.ProjectResponseDto;
 import com.jd.portfolio.entity.Project;
+import com.jd.portfolio.exception.ResourceNotFoundException;
 import com.jd.portfolio.mapper.ProjectMapper;
 import com.jd.portfolio.repository.ProjectRepository;
 import com.jd.portfolio.service.ProjectService;
@@ -32,7 +33,7 @@ public class ProjectServiceImpl implements ProjectService {
     public ProjectResponseDto getProjectById(Long id) {
         Project project = projectRepository.findById(id)
                 .orElseThrow(() ->
-                        new EntityNotFoundException("Project not found with id: " + id));
+                        new ResourceNotFoundException("Project not found with id: " + id));
 
         return ProjectMapper.toResponse(project);
     }
@@ -51,7 +52,7 @@ public class ProjectServiceImpl implements ProjectService {
 
         Project project = projectRepository.findById(id)
                 .orElseThrow(() ->
-                        new EntityNotFoundException("Project not found with id: " + id));
+                        new ResourceNotFoundException("Project not found with id: " + id));
 
         project.setTitle(requestDto.getTitle());
         project.setDescription(requestDto.getDescription());

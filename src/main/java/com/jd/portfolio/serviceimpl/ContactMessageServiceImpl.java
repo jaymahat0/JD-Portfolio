@@ -3,6 +3,7 @@ package com.jd.portfolio.serviceimpl;
 import com.jd.portfolio.dto.contact.ContactMessageRequestDto;
 import com.jd.portfolio.dto.contact.ContactMessageResponseDto;
 import com.jd.portfolio.entity.ContactMessage;
+import com.jd.portfolio.exception.ResourceNotFoundException;
 import com.jd.portfolio.mapper.ContactMessageMapper;
 import com.jd.portfolio.repository.ContactMessageRepository;
 import com.jd.portfolio.service.ContactMessageService;
@@ -39,7 +40,7 @@ public class ContactMessageServiceImpl implements ContactMessageService {
         ContactMessage contactMessage =
                 contactMessageRepository.findById(id)
                         .orElseThrow(() ->
-                                new EntityNotFoundException(
+                                new ResourceNotFoundException(
                                         "Contact message not found with id: " + id));
 
         return ContactMessageMapper.toResponse(contactMessage);

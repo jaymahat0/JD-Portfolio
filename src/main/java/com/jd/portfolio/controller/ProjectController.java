@@ -3,6 +3,7 @@ package com.jd.portfolio.controller;
 import com.jd.portfolio.dto.project.ProjectRequestDto;
 import com.jd.portfolio.dto.project.ProjectResponseDto;
 import com.jd.portfolio.service.ProjectService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -29,14 +30,14 @@ public class ProjectController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ProjectResponseDto createProject(
-            @RequestBody ProjectRequestDto requestDto) {
+            @Valid @RequestBody ProjectRequestDto requestDto) {
         return projectService.createProject(requestDto);
     }
 
     @PutMapping("/{id}")
     public ProjectResponseDto updateProject(
             @PathVariable Long id,
-            @RequestBody ProjectRequestDto requestDto) {
+            @Valid @RequestBody ProjectRequestDto requestDto) {
 
         return projectService.updateProject(id, requestDto);
     }

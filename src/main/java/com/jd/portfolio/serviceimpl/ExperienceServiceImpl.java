@@ -3,6 +3,7 @@ package com.jd.portfolio.serviceimpl;
 import com.jd.portfolio.dto.experience.ExperienceRequestDto;
 import com.jd.portfolio.dto.experience.ExperienceResponseDto;
 import com.jd.portfolio.entity.Experience;
+import com.jd.portfolio.exception.ResourceNotFoundException;
 import com.jd.portfolio.mapper.ExperienceMapper;
 import com.jd.portfolio.repository.ExperienceRepository;
 import com.jd.portfolio.service.ExperienceService;
@@ -22,6 +23,9 @@ public class ExperienceServiceImpl implements ExperienceService {
 
     @Override
     public ExperienceResponseDto createExperience(ExperienceRequestDto requestDto) {
+        if(requestDto.getEndYear() < requestDto.getStartYear()) {
+            throw new IllegalArgumentException("End year cannot be earlier than start year");
+        }
         Experience experience = ExperienceMapper.toEntity(requestDto);
         return ExperienceMapper.toResponse(
                 experienceRepository.save(experience)
@@ -34,7 +38,7 @@ public class ExperienceServiceImpl implements ExperienceService {
         return ExperienceMapper.toResponse(
                 experienceRepository.findById(id)
                         .orElseThrow(() ->
-                                new EntityNotFoundException("Experience not found with id: " + id))
+                                new ResourceNotFoundException("Experience not found with id: " + id))
         );
     }
 
@@ -50,9 +54,13 @@ public class ExperienceServiceImpl implements ExperienceService {
     @Override
     public ExperienceResponseDto updateExperience(Long id, ExperienceRequestDto requestDto) {
 
+        if(requestDto.getEndYear() < requestDto.getStartYear()) {
+            throw new IllegalArgumentException("End year cannot be earlier than start year");
+        }
+
         Experience existing = experienceRepository.findById(id)
                 .orElseThrow(() ->
-                        new EntityNotFoundException("Experience not found with the ID"));
+                        new ResourceNotFoundException("Experience not found with id: " + id));
 
         existing.setCompany(requestDto.getCompany());
         existing.setRole(requestDto.getRole());
