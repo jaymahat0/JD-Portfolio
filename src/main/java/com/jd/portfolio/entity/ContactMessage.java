@@ -2,6 +2,7 @@ package com.jd.portfolio.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -24,9 +25,11 @@ public class ContactMessage {
 
     private String subject;
 
-    @Column(length = 5000)
+    @Column(length = 50000)
     private String message;
 
+    @CreationTimestamp
+    @Column(updatable = false)
     private LocalDateTime createdAt;
 
     private Boolean readStatus;

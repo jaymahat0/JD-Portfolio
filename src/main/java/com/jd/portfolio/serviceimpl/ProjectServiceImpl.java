@@ -9,6 +9,9 @@ import com.jd.portfolio.repository.ProjectRepository;
 import com.jd.portfolio.service.ProjectService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,11 +43,17 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<ProjectResponseDto> getAllProjects() {
-        return projectRepository.findAll()
-                .stream()
-                .map(ProjectMapper::toResponse)
-                .toList();
+    public Page<ProjectResponseDto> getAllProjects(Pageable pageable) {
+        int defaultPageSize = 5;
+        pageable = PageRequest.of(
+                pageable.getPageNumber(),
+                defaultPageSize,
+                pageable.getSort()
+        );
+
+        Page<Project> projects = projectRepository.findAll(pageable);
+
+        return projects.map(ProjectMapper::toResponse);
     }
 
     @Override

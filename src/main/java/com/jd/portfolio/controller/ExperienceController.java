@@ -5,21 +5,27 @@ import com.jd.portfolio.dto.experience.ExperienceResponseDto;
 import com.jd.portfolio.service.ExperienceService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/experiences")
+@RequestMapping("/experiences")
 @RequiredArgsConstructor
 public class ExperienceController {
 
     private final ExperienceService experienceService;
 
     @GetMapping
-    public List<ExperienceResponseDto> getAllExperiences() {
-        return experienceService.getAllExperiences();
+    public Page<ExperienceResponseDto> getAllExperiences(
+            @PageableDefault(page = 0,size = 5)
+            Pageable pageable
+    ) {
+        return experienceService.getAllExperiences(pageable);
     }
 
     @GetMapping("/{id}")

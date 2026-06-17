@@ -10,11 +10,17 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 
-import java.util.List;
 
 @Configuration
 @EnableConfigurationProperties(SecurityData.SecurityProperties.class)
 public class SecurityConfig {
+
+    public static final String[] PUBLIC_URLs = {
+            "/educations/**",
+            "/experiences/**",
+            "/projects/**",
+            "/skills/**"
+    };
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http)
@@ -30,11 +36,11 @@ public class SecurityConfig {
                                 "/v3/api-docs/**",
                                 "/swagger-ui.html"
                         ).permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/**")
+                        .requestMatchers(HttpMethod.GET, PUBLIC_URLs)
                         .permitAll()
 
                         .requestMatchers(HttpMethod.POST,
-                                "/api/contact-messages")
+                                "/contact-messages")
                         .permitAll()
 
                         .anyRequest()

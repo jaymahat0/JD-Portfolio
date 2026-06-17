@@ -2,6 +2,8 @@ package com.jd.portfolio.service;
 
 import com.jd.portfolio.dto.experience.ExperienceRequestDto;
 import com.jd.portfolio.dto.experience.ExperienceResponseDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -11,7 +13,7 @@ public interface ExperienceService {
 
     ExperienceResponseDto getExperienceById(Long id);
 
-    List<ExperienceResponseDto> getAllExperiences();
+    Page<ExperienceResponseDto> getAllExperiences(Pageable pageable);
 
     ExperienceResponseDto updateExperience(Long id, ExperienceRequestDto requestDto);
 

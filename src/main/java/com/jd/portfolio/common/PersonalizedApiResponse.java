@@ -2,10 +2,12 @@ package com.jd.portfolio.common;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
+@Builder
 @Schema(description = "Standard API Response wrapper")
 public class PersonalizedApiResponse<T> {
 

@@ -5,21 +5,27 @@ import com.jd.portfolio.dto.skill.SkillResponseDto;
 import com.jd.portfolio.service.SkillService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/skills")
+@RequestMapping("/skills")
 @RequiredArgsConstructor
 public class SkillController {
 
     private final SkillService skillService;
 
     @GetMapping
-    public List<SkillResponseDto> getAllSkills() {
-        return skillService.getAllSkills();
+    public Page<SkillResponseDto> getAllSkills(
+            @PageableDefault(page = 0, size = 20)
+            Pageable pageable
+    ) {
+        return skillService.getAllSkills(pageable);
     }
 
     @GetMapping("/{id}")

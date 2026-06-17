@@ -9,6 +9,9 @@ import com.jd.portfolio.repository.ExperienceRepository;
 import com.jd.portfolio.service.ExperienceService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -44,11 +47,17 @@ public class ExperienceServiceImpl implements ExperienceService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<ExperienceResponseDto> getAllExperiences() {
-        return experienceRepository.findAll()
-                .stream()
-                .map(ExperienceMapper::toResponse)
-                .toList();
+    public Page<ExperienceResponseDto> getAllExperiences(Pageable pageable) {
+        int defaultSize = 5;
+        pageable = PageRequest.of(
+                pageable.getPageNumber(),
+                defaultSize,
+                pageable.getSort()
+        );
+
+        Page<Experience> experiences = experienceRepository.findAll(pageable);
+
+        return experiences.map(ExperienceMapper::toResponse);
     }
 
     @Override

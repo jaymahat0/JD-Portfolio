@@ -5,21 +5,27 @@ import com.jd.portfolio.dto.project.ProjectResponseDto;
 import com.jd.portfolio.service.ProjectService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/projects")
+@RequestMapping("/projects")
 @RequiredArgsConstructor
 public class ProjectController {
 
     private final ProjectService projectService;
 
     @GetMapping
-    public List<ProjectResponseDto> getAllProjects() {
-        return projectService.getAllProjects();
+    public Page<ProjectResponseDto> getAllProjects(
+            @PageableDefault(page = 0, size = 5)
+            Pageable pageable
+    ) {
+        return projectService.getAllProjects(pageable);
     }
 
     @GetMapping("/{id}")

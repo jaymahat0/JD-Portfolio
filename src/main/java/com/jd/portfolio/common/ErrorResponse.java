@@ -1,13 +1,13 @@
-package com.jd.portfolio.payload;
+package com.jd.portfolio.common;
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
 @Getter
-@Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class ErrorResponse {
 
@@ -18,6 +18,4 @@ public class ErrorResponse {
     private String error;
 
     private String message;
-
-    private String path;
 }

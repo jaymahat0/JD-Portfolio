@@ -11,6 +11,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/educations")
+@RequestMapping("/educations")
 @Tag(
         name = "Education API",
         description = "Operations related to education records"
@@ -29,15 +32,17 @@ public class EducationController {
     private final EducationService educationService;
 
     @GetMapping
-    public ResponseEntity<PersonalizedApiResponse<List<EducationResponseDto>>> getAllEducations() {
+    public ResponseEntity<PersonalizedApiResponse<Page<EducationResponseDto>>> getAllEducations(
+            @PageableDefault(page = 0, size = 5)
+            Pageable pageable) {
 
-        List<EducationResponseDto> all = educationService.getAllEducations();
+        Page<EducationResponseDto> all_data = educationService.getAllEducations(pageable);
 
         return ResponseEntity.ok()
-                .body(new PersonalizedApiResponse<List<EducationResponseDto>>(
+                .body(new PersonalizedApiResponse<Page<EducationResponseDto>>(
                         true,
                         "All educations fetched",
-                        all
+                        all_data
                 ));
     }
 

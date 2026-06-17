@@ -9,6 +9,9 @@ import com.jd.portfolio.repository.SkillRepository;
 import com.jd.portfolio.service.SkillService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,11 +43,17 @@ public class SkillServiceImpl implements SkillService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<SkillResponseDto> getAllSkills() {
-        return skillRepository.findAll()
-                .stream()
-                .map(SkillMapper::toResponse)
-                .toList();
+    public Page<SkillResponseDto> getAllSkills(Pageable pageable) {
+        int defaultPageSize = 20;
+        pageable = PageRequest.of(
+                pageable.getPageNumber(),
+                defaultPageSize,
+                pageable.getSort()
+        );
+
+        Page<Skill> skills = skillRepository.findAll(pageable);
+
+        return skills.map(SkillMapper::toResponse);
     }
 
     @Override
