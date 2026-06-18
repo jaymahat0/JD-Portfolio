@@ -1,0 +1,14 @@
+# PostgreSQL
+spring.datasource.url=Database_url_environment_variable
+spring.datasource.username=Database_username_environment_variable
+spring.datasource.password=Database_password_environment_variable
+
+# JPA
+spring.jpa.hibernate.ddl-auto=validate
+spring.jpa.show-sql=false
+spring.jpa.properties.hibernate.format_sql=false
+
+# Admin User
+portfolio.admin.username=Username_environment_variable
+portfolio.admin.password=Password_environment_variable
+portfolio.admin.role=User_role

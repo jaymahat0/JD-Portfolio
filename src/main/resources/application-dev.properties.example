@@ -1,0 +1,14 @@
+# PostgreSQL
+spring.datasource.url=jdbc:postgresql://localhost:5432/database_name
+spring.datasource.username=database_username
+spring.datasource.password=database_password
+
+# JPA
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+
+# Admin User
+portfolio.admin.username=user_name
+portfolio.admin.password=user_password
+portfolio.admin.role=user_role
