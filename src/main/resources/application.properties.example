@@ -1,10 +1,18 @@
 spring.application.name=portfolio
 
+# info
+info.app.name=Portfolio Application
+info.app.version=1.0.0
+info.app.author=Your_name
+
 server.port=8080
 server.servlet.context-path=/api/v1
 
 # Active Profile
 spring.profiles.active=dev
+
+#JPA
+spring.jpa.hibernate.ddl-auto=validate
 
 # PostgreSQL Driver
 spring.datasource.driver-class-name=org.postgresql.Driver
@@ -17,3 +25,7 @@ springdoc.swagger-ui.path=/swagger-ui.html
 springdoc.swagger-ui.operationsSorter=method
 springdoc.swagger-ui.tagsSorter=alpha
 springdoc.default-produces-media-type=application/json
+
+# Actuator
+management.endpoints.web.exposure.include=health,info,metrics
+management.endpoint.health.show-details=never
